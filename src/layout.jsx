@@ -9,6 +9,7 @@ export default class EditorLayout extends React.Component {
     this.state={
       showEditor:true
     }
+    this.showEditor = this.showEditor.bind(this);
   }
 
   static propTypes = {
@@ -19,6 +20,12 @@ export default class EditorLayout extends React.Component {
     getComponent: PropTypes.func.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
     layoutActions: PropTypes.object.isRequired
+  }
+
+  showEditor = () =>{
+    this.setState({
+      showEditor:!this.state.showEditor
+    })
   }
 
   onChange = (newYaml) => {
@@ -53,11 +60,7 @@ export default class EditorLayout extends React.Component {
 
     return (
       <div>
-        <button onClick={()=>{
-          this.setState({
-            showEditor:!this.state.showEditor
-          })
-        }}>view/editor</button>
+        <button onClick={this.showEditor}>view/editor</button>
         <Container className='container'>
           <Dropzone
             className="dropzone"
