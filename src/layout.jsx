@@ -4,6 +4,13 @@ import Dropzone from "react-dropzone"
 
 export default class EditorLayout extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state={
+      showEditor:true
+    }
+  }
+
   static propTypes = {
     errSelectors: PropTypes.object.isRequired,
     errActions: PropTypes.object.isRequired,
@@ -46,6 +53,11 @@ export default class EditorLayout extends React.Component {
 
     return (
       <div>
+        <button onClick={()=>{
+          this.setState({
+            showEditor:!this.state.showEditor
+          })
+        }}>view/editor</button>
         <Container className='container'>
           <Dropzone
             className="dropzone"
@@ -63,12 +75,19 @@ export default class EditorLayout extends React.Component {
                 </div>
               )
             } else {
-              return (
-                <SplitPaneMode>
-                  <EditorContainer onChange={this.onChange} />
+              if(this.state.showEditor){
+                return(
+                  <SplitPaneMode>
+                   <EditorContainer onChange={this.onChange} />
+                   <UIBaseLayout/>
+                 </SplitPaneMode>
+                )
+              }
+              else{
+                return(
                   <UIBaseLayout/>
-                </SplitPaneMode>
-              )
+                )
+              }
             }
           }}
           </Dropzone>
